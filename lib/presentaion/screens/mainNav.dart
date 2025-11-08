@@ -22,6 +22,31 @@ class _MainnavState extends State<Mainnav> {
       Favourite(),
     ];
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 110,
+        backgroundColor: const Color.fromARGB(255, 201, 238, 240),
+        title: Image.asset("assets/logoDark.png", width: 150),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.notifications_rounded,
+              color: Colors.black,
+              size: 24,
+            ),
+          ),
+          SizedBox(width: 10),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings_rounded, color: Colors.black, size: 24),
+          ),
+          SizedBox(width: 10),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.logout_rounded, color: Colors.black, size: 24),
+          ),
+        ],
+      ),
       body: screens[index],
       bottomNavigationBar: SizedBox(
         height: 110,
@@ -42,8 +67,8 @@ class _MainnavState extends State<Mainnav> {
               label: "",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite, color: Color(0xFFAFADAE)),
-              activeIcon: Icon(Icons.favorite, color: Colors.black),
+              icon: Icon(Icons.favorite_rounded, color: Color(0xFFAFADAE)),
+              activeIcon: Icon(Icons.favorite_rounded, color: Colors.black),
               label: "",
             ),
           ],

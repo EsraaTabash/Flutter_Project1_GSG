@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_book_application/data/models/recipeModel.dart';
-import 'package:recipe_book_application/data/recipeRepo.dart';
 import 'package:recipe_book_application/presentaion/widgets/recipeCardWidget.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_book_application/providers/recipe_provider.dart';
+import '../../data/repo/recipeRepo.dart';
 
 class Home extends StatefulWidget {
   final String name;
@@ -13,48 +14,37 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool isLoading = true;
-  String errorMsg = '';
-  List<Recipemodel> recipes = [];
+  //bool isLoading = true;
+  //String errorMsg = '';
+  //List<Recipemodel> recipes = [];
   @override
   void initState() {
     super.initState();
-    fetchRecipes();
+    //fetchRecipes();
   }
 
   @override
   Widget build(BuildContext context) {
+    var rv = Provider.of<RecipeProvider>(context);
+    var recipes = rv.recipes;
+    var isLoading = rv.isLoading;
+    var errorMsg = rv.errorMsg;
+
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 110,
-        backgroundColor: const Color.fromARGB(255, 201, 238, 240),
-        title: Image.asset("assets/logoDark.png", width: 150),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.notifications_rounded,
-              color: Colors.black,
-              size: 24,
-            ),
-          ),
-          SizedBox(width: 10),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings_rounded, color: Colors.black, size: 24),
-          ),
-          SizedBox(width: 10),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.logout_rounded, color: Colors.black, size: 24),
-          ),
-        ],
-      ),
       body: isLoading
           ? Center(child: CircularProgressIndicator(color: Color(0xFF00B4BF)))
           : Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://culinaryclassroom.com/wp-content/uploads/2024/02/How-To-Become-a-Better-Cook-1024x585-1024x585.jpg',
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.only(
                     top: 30,
@@ -152,28 +142,28 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<void> fetchRecipes() async {
-    try {
-      setState(() {
-        isLoading = true;
-        errorMsg = '';
-      });
-      final data = await Reciperepo.fetchRecipes();
-      setState(() {
-        isLoading = false;
-        recipes = data;
-      });
-    } catch (e) {
-      setState(() {
-        errorMsg = e.toString();
-        isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $errorMsg'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
+  // Future<void> fetchRecipes() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true;
+  //       errorMsg = '';
+  //     });
+  //     final data = await Reciperepo.fetchRecipes();
+  //     setState(() {
+  //       isLoading = false;
+  //       recipes = data;
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       errorMsg = e.toString();
+  //       isLoading = false;
+  //     });
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Error: $errorMsg'),
+  //         backgroundColor: Colors.red,
+  //       ),
+  //     );
+  //   }
+  // }
 }

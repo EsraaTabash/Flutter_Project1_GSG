@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_book_application/data/local/local_auth_service.dart';
 import 'package:recipe_book_application/data/models/recipeModel.dart';
 
-class Recipecardwidget extends StatelessWidget {
+class Recipecardwidget extends StatefulWidget {
   final Recipemodel recipe;
-
   const Recipecardwidget({super.key, required this.recipe});
+
+  @override
+  State<Recipecardwidget> createState() => _RecipeitemwidgetState();
+}
+
+class _RecipeitemwidgetState extends State<Recipecardwidget> {
+  bool isFav = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isFav = LocalAuthService.isFavorite(widget.recipe.recipeId ?? 0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +29,10 @@ class Recipecardwidget extends StatelessWidget {
       Color(0xFFF06292), // Pink Berry
       Color(0xFFFFB74D), // Peachy
     ];
-
-    final index = ((recipe.recipeName?.length ?? 0) % recipePalette.length)
+    final index = ((widget.recipe.recipeId ?? 0) % recipePalette.length)
         .toInt();
-
     return Container(
-      margin: const EdgeInsets.all(5),
+      margin: EdgeInsets.all(5),
       padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
       decoration: BoxDecoration(
         color: Color(0xffF6F6F6),
@@ -46,10 +57,10 @@ class Recipecardwidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child:
-                      (recipe.recipeImage != null &&
-                          recipe.recipeImage!.isNotEmpty)
+                      (widget.recipe.recipeImage != null &&
+                          widget.recipe.recipeImage!.isNotEmpty)
                       ? Image.network(
-                          recipe.recipeImage!,
+                          widget.recipe.recipeImage ?? "",
                           width: double.infinity,
                           height: 120,
                           fit: BoxFit.cover,
@@ -66,12 +77,22 @@ class Recipecardwidget extends StatelessWidget {
               Positioned(
                 top: 5,
                 right: 5,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
+                child: InkWell(
+                  onTap: () => _onHeartTap(),
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                    ),
+                    child: isFav
+                        ? Icon(
+                            Icons.favorite,
+                            size: 18,
+                            color: Colors.redAccent,
+                          )
+                        : Icon(Icons.favorite_border, size: 18),
                   ),
-                  child: Image.asset('assets/heart.png'),
                 ),
               ),
             ],
@@ -79,7 +100,7 @@ class Recipecardwidget extends StatelessWidget {
           SizedBox(height: 8),
           Expanded(
             child: Text(
-              recipe.recipeName ?? "",
+              widget.recipe.recipeName ?? "",
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
               style: TextStyle(
@@ -94,9 +115,10 @@ class Recipecardwidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Icon(Icons.restaurant_menu, size: 13, color: Color(0xff868686)),
+              Icon(Icons.monitor_heart, size: 13, color: Color(0xff868686)),
               Text(
-                "${recipe.recipeIngredientsCount} ing",
+                //"${widget.recipe.recipeIngredientsCount} ing",
+                "${widget.recipe.recipeHealthScore} HS",
                 style: TextStyle(
                   color: Color(0xff868686),
                   fontSize: 9,
@@ -107,7 +129,7 @@ class Recipecardwidget extends StatelessWidget {
               Image.asset("assets/dot.png"),
               Image.asset("assets/time.png"),
               Text(
-                "${recipe.recipeTime} min",
+                "${widget.recipe.recipeTime} min",
                 style: TextStyle(
                   color: Color(0xff868686),
                   fontSize: 9,
@@ -131,7 +153,7 @@ class Recipecardwidget extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                recipe.recipeCategory ?? "",
+                widget.recipe.recipeCategory ?? "",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 10,
@@ -144,5 +166,16 @@ class Recipecardwidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _onHeartTap() async {
+    final id = widget.recipe.recipeId;
+    if (id == null) return;
+
+    await LocalAuthService.toggleFavorite(id);
+
+    setState(() {
+      isFav = !isFav;
+    });
   }
 }
