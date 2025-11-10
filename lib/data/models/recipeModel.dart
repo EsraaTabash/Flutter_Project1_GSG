@@ -7,6 +7,7 @@ class Recipemodel {
   double? recipeHealthScore;
   int? recipeTime;
   String? recipeDescription;
+  int? aggregateLikes;
 
   Recipemodel({
     this.recipeId,
@@ -17,6 +18,7 @@ class Recipemodel {
     this.recipeHealthScore,
     this.recipeTime,
     this.recipeDescription,
+    this.aggregateLikes,
   });
 
   factory Recipemodel.fromJson(Map<String, dynamic> json) {
@@ -34,6 +36,7 @@ class Recipemodel {
       recipeHealthScore: json['healthScore'] ?? 0,
       recipeTime: json['readyInMinutes'] ?? 0,
       recipeDescription: json['summary'] ?? "",
+      aggregateLikes: json['aggregateLikes'] ?? 0,
     );
   }
 
@@ -47,6 +50,7 @@ class Recipemodel {
       'healthScore': recipeHealthScore ?? 0,
       'readyInMinutes': recipeTime ?? 0,
       'summary': recipeDescription ?? "",
+      'aggregateLikes': aggregateLikes ?? 0,
     };
   }
 }

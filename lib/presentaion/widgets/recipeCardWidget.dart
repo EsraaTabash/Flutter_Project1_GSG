@@ -98,17 +98,15 @@ class _RecipeitemwidgetState extends State<Recipecardwidget> {
             ],
           ),
           SizedBox(height: 8),
-          Expanded(
-            child: Text(
-              widget.recipe.recipeName ?? "",
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 13,
-                fontFamily: "Inter",
-                fontWeight: FontWeight.w500,
-              ),
+          Text(
+            widget.recipe.recipeName ?? "",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 13,
+              fontFamily: "Inter",
+              fontWeight: FontWeight.w500,
             ),
           ),
           SizedBox(height: 8),

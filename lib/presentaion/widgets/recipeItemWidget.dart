@@ -23,7 +23,7 @@ class _RecipeitemwidgetState extends State<Recipeitemwidget> {
   Widget build(BuildContext context) {
     const recipePalette = [
       Color(0xFFFF8A65), // Coral Orange
-      Color(0xFFFFC107), // Honey Yellow 🍯
+      Color(0xFFFFC107), // Honey Yellow
       Color(0xFF81C784), // Mint Green
       Color(0xFF64B5F6), // Sky Blue
       Color(0xFFF06292), // Pink Berry
@@ -31,9 +31,10 @@ class _RecipeitemwidgetState extends State<Recipeitemwidget> {
     ];
     final index = ((widget.recipe.recipeId ?? 0) % recipePalette.length)
         .toInt();
+
     return Container(
-      margin: const EdgeInsets.all(5),
-      padding: EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Color(0xffF6F6F6),
         borderRadius: BorderRadius.circular(15),
@@ -41,7 +42,7 @@ class _RecipeitemwidgetState extends State<Recipeitemwidget> {
           BoxShadow(
             color: Color(0xff000000),
             blurRadius: 4,
-            offset: const Offset(2, 2),
+            offset: Offset(2, 2),
           ),
         ],
       ),
@@ -50,112 +51,112 @@ class _RecipeitemwidgetState extends State<Recipeitemwidget> {
           Stack(
             alignment: Alignment.topRight,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child:
-                      (widget.recipe.recipeImage != null &&
-                          widget.recipe.recipeImage!.isNotEmpty)
-                      ? Image.network(
-                          widget.recipe.recipeImage ?? "",
-                          width: double.infinity,
-                          height: 120,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          width: double.infinity,
-                          height: 120,
-                          color: Colors.grey[300],
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.image_not_supported),
-                        ),
-                ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: (widget.recipe.recipeImage ?? "").isNotEmpty
+                    ? Image.network(
+                        widget.recipe.recipeImage ?? "",
+                        width: double.infinity,
+                        height: 180,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(
+                        width: double.infinity,
+                        height: 120,
+                        color: Colors.grey[300],
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.image_not_supported),
+                      ),
               ),
               Positioned(
-                top: 5,
-                right: 5,
+                top: 15,
+                right: 15,
                 child: InkWell(
-                  onTap: () => _onHeartTap(),
+                  onTap: _onHeartTap,
                   child: Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.white,
                     ),
-                    child: isFav
-                        ? Icon(
-                            Icons.favorite,
-                            size: 18,
-                            color: Colors.redAccent,
-                          )
-                        : Icon(Icons.favorite_border, size: 18),
+                    child: Icon(
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      size: 18,
+                      color: isFav ? Colors.redAccent : null,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 8),
-          Expanded(
-            child: Text(
-              widget.recipe.recipeName ?? "",
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 13,
-                fontFamily: "Inter",
-                fontWeight: FontWeight.w500,
-              ),
+
+          SizedBox(height: 15),
+
+          Text(
+            widget.recipe.recipeName ?? "",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 17,
+              fontFamily: "Inter",
+              fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Icon(Icons.monitor_heart, size: 13, color: Color(0xff868686)),
-              Text(
-                "${widget.recipe.recipeHealthScore} HS",
-                style: TextStyle(
-                  color: Color(0xff868686),
-                  fontSize: 9,
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Image.asset("assets/dot.png"),
-              Image.asset("assets/time.png"),
-              Text(
-                "${widget.recipe.recipeTime} min",
-                style: TextStyle(
-                  color: Color(0xff868686),
-                  fontSize: 9,
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.w500,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-              color: recipePalette.isNotEmpty
-                  ? recipePalette[index]
-                  : Colors.orangeAccent,
 
+          SizedBox(height: 15),
+
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            decoration: BoxDecoration(
+              color: recipePalette[index].withOpacity(0.1),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Icon(Icons.monitor_heart, size: 20, color: Color(0xff868686)),
+                Text(
+                  "${widget.recipe.recipeHealthScore ?? 0} HS",
+                  style: const TextStyle(
+                    color: Color(0xff868686),
+                    fontSize: 12,
+                    fontFamily: "Inter",
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Image.asset("assets/dot.png", width: 20),
+                Icon(Icons.timer, size: 20, color: Color(0xff868686)),
+                Flexible(
+                  child: Text(
+                    "${widget.recipe.recipeTime ?? 0} min",
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Color(0xff868686),
+                      fontSize: 12,
+                      fontFamily: "Inter",
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 15),
+
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            decoration: BoxDecoration(
+              color: recipePalette[index],
               borderRadius: BorderRadius.circular(15),
             ),
             child: Center(
               child: Text(
                 widget.recipe.recipeCategory ?? "",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 10,
+                  fontSize: 14,
                   fontFamily: "Inter",
                   fontWeight: FontWeight.w600,
                 ),
@@ -167,14 +168,10 @@ class _RecipeitemwidgetState extends State<Recipeitemwidget> {
     );
   }
 
-  _onHeartTap() async {
+  Future<void> _onHeartTap() async {
     final id = widget.recipe.recipeId;
     if (id == null) return;
-
     await LocalAuthService.toggleFavorite(id);
-
-    setState(() {
-      isFav = !isFav;
-    });
+    setState(() => isFav = !isFav);
   }
 }
