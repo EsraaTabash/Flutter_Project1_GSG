@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    height: 350,
+                    height: 250,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
                           padding: EdgeInsets.only(
                             left: 50,
                             right: 50,
-                            top: 50,
+                            top: 30,
                             bottom: 10,
                           ),
                           child: Align(
@@ -108,11 +108,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 50,
-                            right: 50,
-                            top: 20,
-                          ),
+                          padding: EdgeInsets.only(left: 50, right: 50),
                           child: TextField(
                             decoration: InputDecoration(
                               prefixIcon: Icon(
@@ -151,7 +147,6 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -233,7 +228,6 @@ class _HomeState extends State<Home> {
                     width: double.infinity,
                     child: ListView.separated(
                       separatorBuilder: (_, __) => const SizedBox(width: 12),
-                      controller: _autoController,
                       scrollDirection: Axis.horizontal,
                       itemCount: topHealthy.length,
                       itemBuilder: (context, index) {
@@ -310,7 +304,7 @@ class _HomeState extends State<Home> {
 
       _autoController.animateTo(
         next,
-        duration: const Duration(milliseconds: 600),
+        duration: Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       );
 
