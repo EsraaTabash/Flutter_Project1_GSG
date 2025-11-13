@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_book_application/data/local/local_auth_service.dart';
+import 'package:recipe_book_application/presentaion/screens/AddEditRecipe.dart';
 import 'package:recipe_book_application/presentaion/screens/allRecipes.dart';
 import 'package:recipe_book_application/presentaion/screens/favourite.dart';
 import 'package:recipe_book_application/presentaion/screens/home.dart';
@@ -23,14 +24,14 @@ class _MainnavState extends State<Mainnav> {
     List<Widget> screens = [
       Home(name: widget.name ?? "Guest"),
       Allrecipes(),
-      Center(child: Text("Add/Edit Screen")),
+      AddEditRecipe(),
       Favourite(),
       Profile(),
     ];
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 110,
-        backgroundColor: const Color.fromARGB(255, 201, 238, 240),
+        backgroundColor: Color.fromARGB(255, 201, 238, 240),
         title: Image.asset("assets/logoDark.png", width: 150),
         actions: [
           IconButton(

@@ -28,14 +28,6 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  Future<void> _logout() async {
-    await LocalAuthService.logout();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => Login()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final displayName = (name ?? 'Guest').trim();
@@ -46,13 +38,12 @@ class _ProfileState extends State<Profile> {
 
     return Scaffold(
       body: ListView(
-        padding: EdgeInsets.fromLTRB(16, 12, 16, 24),
+        padding: EdgeInsets.only(bottom: 20),
         children: [
           Container(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.symmetric(vertical: 30),
             decoration: BoxDecoration(
-              color: Color(0xFFF7F9FA),
-              borderRadius: BorderRadius.circular(16),
+              color: Color.fromARGB(255, 201, 238, 240),
             ),
             child: Column(
               children: [
@@ -93,126 +84,142 @@ class _ProfileState extends State<Profile> {
           ),
 
           SizedBox(height: 16),
-
           Container(
-            margin: EdgeInsets.only(bottom: 10),
-            decoration: BoxDecoration(
-              color: Color(0xFFF7F9FA),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.person_outline_rounded,
-                color: Color(0xFF00B4BF),
-              ),
-              title: Text(
-                'Name',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                  fontFamily: "Inter",
-                ),
-              ),
-              subtitle: Text(
-                displayName,
-                style: TextStyle(fontSize: 14, fontFamily: "Inter"),
-              ),
-            ),
-          ),
-
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFF7F9FA),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              leading: Icon(
-                Icons.alternate_email_rounded,
-                color: Color(0xFF00B4BF),
-              ),
-              title: Text(
-                'Email',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                  fontFamily: "Inter",
-                ),
-              ),
-              subtitle: Text(
-                displayEmail,
-                style: TextStyle(fontSize: 14, fontFamily: "Inter"),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 16),
-
-          ListTile(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            tileColor: Color(0xFFF7F9FA),
-            leading: Icon(Icons.info_outline_rounded, color: Color(0xFF00B4BF)),
-            title: Text(
-              'About',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                fontFamily: "Inter",
-              ),
-            ),
-            subtitle: Text(
-              'Recipe Book Application',
-              style: TextStyle(fontSize: 13, fontFamily: "Inter"),
-            ),
-            onTap: () {
-              showAboutDialog(
-                context: context,
-                applicationName: 'Recipe Book',
-                applicationVersion: '1.0.0',
-                applicationIcon: CircleAvatar(
-                  radius: 18,
-                  backgroundColor: Color.fromARGB(255, 248, 242, 196),
-                  child: Icon(
-                    Icons.restaurant_menu_rounded,
-                    color: Colors.black,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF7F9FA),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.person_outline_rounded,
+                      color: Color(0xFF00B4BF),
+                    ),
+                    title: Text(
+                      'Name',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        fontFamily: "Inter",
+                      ),
+                    ),
+                    subtitle: Text(
+                      displayName,
+                      style: TextStyle(fontSize: 14, fontFamily: "Inter"),
+                    ),
                   ),
                 ),
-                children: [
-                  Text(
-                    'A simple Flutter training project.',
-                    style: TextStyle(fontFamily: "Inter"),
+
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF7F9FA),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ],
-              );
-            },
-          ),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.alternate_email_rounded,
+                      color: Color(0xFF00B4BF),
+                    ),
+                    title: Text(
+                      'Email',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        fontFamily: "Inter",
+                      ),
+                    ),
+                    subtitle: Text(
+                      displayEmail,
+                      style: TextStyle(fontSize: 14, fontFamily: "Inter"),
+                    ),
+                  ),
+                ),
 
-          SizedBox(height: 30),
+                SizedBox(height: 16),
 
-          ElevatedButton.icon(
-            onPressed: _logout,
-            icon: Icon(Icons.logout_rounded),
-            label: Text(
-              'Logout',
-              style: TextStyle(
-                fontFamily: "Inter",
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 248, 242, 196),
-              foregroundColor: Colors.black,
-              minimumSize: Size.fromHeight(48),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 0,
+                ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  tileColor: Color(0xFFF7F9FA),
+                  leading: Icon(
+                    Icons.info_outline_rounded,
+                    color: Color(0xFF00B4BF),
+                  ),
+                  title: Text(
+                    'About',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: "Inter",
+                    ),
+                  ),
+                  subtitle: Text(
+                    'Recipe Book Application',
+                    style: TextStyle(fontSize: 13, fontFamily: "Inter"),
+                  ),
+                  onTap: () {
+                    showAboutDialog(
+                      context: context,
+                      applicationName: 'Chefio',
+                      applicationVersion: '1.0.0',
+                      applicationIcon: CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Color.fromARGB(255, 248, 242, 196),
+                        child: Icon(
+                          Icons.restaurant_menu_rounded,
+                          color: Colors.black,
+                        ),
+                      ),
+                      children: [
+                        Text(
+                          'A simple Flutter training project.',
+                          style: TextStyle(fontFamily: "Inter"),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+
+                SizedBox(height: 30),
+
+                ElevatedButton.icon(
+                  onPressed: _logout,
+                  icon: Icon(Icons.logout_rounded),
+                  label: Text(
+                    'Logout',
+                    style: TextStyle(
+                      fontFamily: "Inter",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 248, 242, 196),
+                    foregroundColor: Colors.black,
+                    minimumSize: Size.fromHeight(48),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _logout() async {
+    await LocalAuthService.logout();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => Login()),
     );
   }
 }

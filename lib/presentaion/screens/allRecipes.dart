@@ -26,7 +26,7 @@ class _AllrecipesState extends State<Allrecipes> {
           : Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
                     "All Recipes",
                     style: TextStyle(
@@ -41,7 +41,7 @@ class _AllrecipesState extends State<Allrecipes> {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Recipeitemwidget(recipe: recipes[index]),
                       );
                     },

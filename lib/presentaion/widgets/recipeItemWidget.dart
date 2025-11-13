@@ -21,149 +21,113 @@ class _RecipeitemwidgetState extends State<Recipeitemwidget> {
 
   @override
   Widget build(BuildContext context) {
-    const recipePalette = [
-      Color(0xFFFF8A65), // Coral Orange
-      Color(0xFFFFC107), // Honey Yellow
-      Color(0xFF81C784), // Mint Green
-      Color(0xFF64B5F6), // Sky Blue
-      Color(0xFFF06292), // Pink Berry
-      Color(0xFFFFB74D), // Peachy
+    const palette = [
+      Color(0xFFFF8A65),
+      Color(0xFFFFC107),
+      Color(0xFF81C784),
+      Color(0xFF64B5F6),
+      Color(0xFFF06292),
+      Color(0xFFFFB74D),
     ];
-    final index = ((widget.recipe.recipeId ?? 0) % recipePalette.length)
-        .toInt();
 
-    return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Color(0xffF6F6F6),
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xff000000),
-            blurRadius: 4,
-            offset: Offset(2, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: (widget.recipe.recipeImage ?? "").isNotEmpty
-                    ? Image.network(
-                        widget.recipe.recipeImage ?? "",
-                        width: double.infinity,
-                        height: 180,
-                        fit: BoxFit.cover,
-                      )
-                    : Container(
-                        width: double.infinity,
-                        height: 120,
-                        color: Colors.grey[300],
-                        alignment: Alignment.center,
-                        child: const Icon(Icons.image_not_supported),
-                      ),
+    final idx = (widget.recipe.recipeId ?? 0) % palette.length;
+    final accent = palette[idx];
+
+    final r = widget.recipe;
+
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.black12)),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                r.recipeImage!,
+                width: 80,
+                height: 70,
+                fit: BoxFit.cover,
               ),
-              Positioned(
-                top: 15,
-                right: 15,
-                child: InkWell(
-                  onTap: _onHeartTap,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                    ),
-                    child: Icon(
-                      isFav ? Icons.favorite : Icons.favorite_border,
-                      size: 18,
-                      color: isFav ? Colors.redAccent : null,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(height: 15),
-
-          Text(
-            widget.recipe.recipeName ?? "",
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 17,
-              fontFamily: "Inter",
-              fontWeight: FontWeight.w500,
             ),
-          ),
 
-          SizedBox(height: 15),
+            SizedBox(width: 12),
 
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            decoration: BoxDecoration(
-              color: recipePalette[index].withOpacity(0.1),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Icon(Icons.monitor_heart, size: 20, color: Color(0xff868686)),
-                Text(
-                  "${widget.recipe.recipeHealthScore ?? 0} HS",
-                  style: const TextStyle(
-                    color: Color(0xff868686),
-                    fontSize: 12,
-                    fontFamily: "Inter",
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Image.asset("assets/dot.png", width: 20),
-                Icon(Icons.timer, size: 20, color: Color(0xff868686)),
-                Flexible(
-                  child: Text(
-                    "${widget.recipe.recipeTime ?? 0} min",
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    r.recipeName ?? "",
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xff868686),
-                      fontSize: 12,
+                    style: TextStyle(
                       fontFamily: "Inter",
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
 
-          const SizedBox(height: 15),
+                  SizedBox(height: 6),
 
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-            decoration: BoxDecoration(
-              color: recipePalette[index],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Center(
-              child: Text(
-                widget.recipe.recipeCategory ?? "",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: "Inter",
-                  fontWeight: FontWeight.w600,
-                ),
+                  Row(
+                    children: [
+                      Icon(Icons.timer, size: 15, color: Colors.grey),
+                      SizedBox(width: 4),
+                      Text(
+                        "${r.recipeTime ?? 0} min",
+                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+
+                      SizedBox(width: 10),
+
+                      Icon(Icons.monitor_heart, size: 15, color: Colors.grey),
+                      SizedBox(width: 4),
+                      Text(
+                        "${r.recipeHealthScore ?? 0} HS",
+                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 6),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: accent.withOpacity(.25),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      r.recipeCategory ?? "not specified",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: accent,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+
+            SizedBox(width: 6),
+
+            InkWell(
+              onTap: _onHeartTap,
+              child: Icon(
+                isFav ? Icons.favorite : Icons.favorite_border,
+                color: isFav ? Colors.redAccent : Colors.black54,
+                size: 22,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

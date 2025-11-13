@@ -34,7 +34,7 @@ class _FavouriteState extends State<Favourite> {
           : Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
+                  padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
                     "Favourite Recipes",
                     style: TextStyle(
