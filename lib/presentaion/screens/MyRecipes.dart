@@ -24,6 +24,7 @@ class _MyrecipesState extends State<Myrecipes> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF00B4BF),
+        foregroundColor: Colors.white,
         onPressed: () => openForm(),
         child: Icon(Icons.add),
       ),
