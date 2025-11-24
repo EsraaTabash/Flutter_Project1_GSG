@@ -87,7 +87,7 @@ class _SignupState extends State<Signup> {
                         isPassword: false,
                         validator: (phone) {
                           if (phone!.isEmpty) {
-                            return "EMAIL IS REQUIRED";
+                            return "PHONE NUMBER IS REQUIRED";
                           }
                           if (!phone.startsWith("+970")) {
                             return "ENTER A VALID PHONE NUMBER";
@@ -172,12 +172,16 @@ class _SignupState extends State<Signup> {
 
   signup() {
     if (_formKey.currentState!.validate()) {
-      LocalAuthService.signup(nameController.text);
+      LocalAuthService.signup(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        phone: phoneController.text.trim(),
+      );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
-            return Mainnav(name: nameController.text);
+            return Mainnav(name: nameController.text.trim());
           },
         ),
       );

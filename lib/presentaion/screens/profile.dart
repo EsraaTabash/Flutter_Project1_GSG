@@ -13,6 +13,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   String? name;
   String? email;
+  String? phone;
 
   @override
   void initState() {
@@ -20,18 +21,12 @@ class _ProfileState extends State<Profile> {
     _loadProfile();
   }
 
-  Future<void> _loadProfile() async {
-    final sp = await SharedPreferences.getInstance();
-    setState(() {
-      name = sp.getString('user_name') ?? 'Guest';
-      email = sp.getString('user_email') ?? 'guest@example.com';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final displayName = (name ?? 'Guest').trim();
     final displayEmail = (email ?? 'guest@example.com').trim();
+    final displayPhone = (phone ?? '+970 xxx xxxx').trim();
+
     final initialChar = displayName.isNotEmpty
         ? displayName.characters.first.toUpperCase()
         : 'U';
@@ -141,6 +136,31 @@ class _ProfileState extends State<Profile> {
 
                 SizedBox(height: 16),
 
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF7F9FA),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.phone_rounded,
+                      color: Color(0xFF00B4BF),
+                    ),
+                    title: Text(
+                      'Phone Number',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        fontFamily: "Inter",
+                      ),
+                    ),
+                    subtitle: Text(
+                      displayPhone,
+                      style: TextStyle(fontSize: 14, fontFamily: "Inter"),
+                    ),
+                  ),
+                ),
+
                 ListTile(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -213,6 +233,14 @@ class _ProfileState extends State<Profile> {
         ],
       ),
     );
+  }
+
+  Future<void> _loadProfile() async {
+    setState(() {
+      name = LocalAuthService.getUserName() ?? 'Guest';
+      email = LocalAuthService.getUserEmail() ?? 'guest@example.com';
+      phone = LocalAuthService.getUserPhone() ?? '+970 xxx xxxx';
+    });
   }
 
   Future<void> _logout() async {

@@ -88,7 +88,7 @@ class _RecipeFormSheetState extends State<RecipeFormSheet> {
                 ),
                 child: Column(
                   children: [
-                    Customtextfieldwidget(
+                    Customtextfield(
                       hintName: "Title",
                       controller: title,
                       isPassword: false,
@@ -97,7 +97,7 @@ class _RecipeFormSheetState extends State<RecipeFormSheet> {
                     ),
                     SizedBox(height: 12),
 
-                    Customtextfieldwidget(
+                    Customtextfield(
                       hintName: "Image URL",
                       controller: image,
                       isPassword: false,
@@ -108,7 +108,7 @@ class _RecipeFormSheetState extends State<RecipeFormSheet> {
                     Row(
                       children: [
                         Expanded(
-                          child: Customtextfieldwidget(
+                          child: Customtextfield(
                             hintName: "Dish Type",
                             controller: dishType,
                             isPassword: false,
@@ -117,7 +117,7 @@ class _RecipeFormSheetState extends State<RecipeFormSheet> {
                         ),
                         SizedBox(width: 12),
                         Expanded(
-                          child: Customtextfieldwidget(
+                          child: Customtextfield(
                             hintName: "Ready in minutes",
                             controller: readyMinutes,
                             isPassword: false,

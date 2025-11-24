@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Customtextfieldwidget extends StatelessWidget {
+class Customtextfield extends StatelessWidget {
   String hintName = '';
   bool isPassword = false;
   TextEditingController controller = TextEditingController();
   String? Function(String?)? validator;
 
-  Customtextfieldwidget({
+  Customtextfield({
     super.key,
     required this.hintName,
     required this.controller,

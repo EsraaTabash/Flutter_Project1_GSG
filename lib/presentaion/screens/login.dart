@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_book_application/data/local/local_auth_service.dart';
 import 'package:recipe_book_application/presentaion/screens/mainNav.dart';
 import 'package:recipe_book_application/presentaion/screens/signup.dart';
 import 'package:recipe_book_application/presentaion/widgets/customTextFieldWidget.dart';
@@ -144,7 +145,7 @@ class _LoginState extends State<Login> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return Mainnav();
+            return Mainnav(name: LocalAuthService.getUserName() ?? "Guest");
           },
         ),
       );
