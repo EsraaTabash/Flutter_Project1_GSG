@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_book_application/cubit/auth_state.dart';
 import 'package:recipe_book_application/data/firebase/firebase_auth_service.dart';
+import 'package:recipe_book_application/data/local/local_auth_service.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
@@ -38,5 +39,16 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(AuthLoadingState());
     await FirebaseAuth.instance.currentUser?.updateDisplayName(name);
     emit(AuthSuccessState(FirebaseAuth.instance.currentUser!));
+  }
+
+  logout() async {
+    emit(AuthLoadingState());
+    try {
+      await FirebaseAuthService.logout();
+      await LocalAuthService.logout();
+      emit(AuthInitialState());
+    } catch (e) {
+      emit(AuthErrorState(e.toString()));
+    }
   }
 }

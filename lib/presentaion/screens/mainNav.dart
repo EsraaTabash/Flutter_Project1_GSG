@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipe_book_application/cubit/auth_cubit.dart';
 import 'package:recipe_book_application/data/local/local_auth_service.dart';
 import 'package:recipe_book_application/presentaion/screens/MyRecipes.dart';
 import 'package:recipe_book_application/presentaion/screens/allRecipes.dart';
@@ -11,7 +13,7 @@ import 'package:recipe_book_application/presentaion/widgets/drawer_item.dart';
 class Mainnav extends StatefulWidget {
   String? name;
 
-  Mainnav({this.name, super.key});
+  Mainnav({super.key, this.name});
 
   @override
   State<Mainnav> createState() => _MainnavState();
@@ -196,13 +198,14 @@ class _MainnavState extends State<Mainnav> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
                   Navigator.pop(context);
-                  LocalAuthService.logout();
+                  await context.read<AuthCubit>().logout();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (_) => Login()),
                   );
+                  // LocalAuthService.logout();
                 },
               ),
             ],
