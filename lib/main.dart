@@ -6,7 +6,7 @@ import 'package:recipe_book_application/cubit/auth_cubit.dart';
 import 'package:recipe_book_application/data/local/local_auth_service.dart';
 import 'package:recipe_book_application/data/local/recipesSqlite.dart';
 import 'package:recipe_book_application/firebase_options.dart';
-import 'package:recipe_book_application/presentaion/screens/login.dart';
+import 'package:recipe_book_application/presentaion/screens/splash.dart';
 import 'providers/recipe_provider.dart';
 
 void main() async {
@@ -25,7 +25,7 @@ void main() async {
             create: (_) => RecipeProvider()..fetchRecipes(),
           ),
         ],
-        child: MaterialApp(debugShowCheckedModeBanner: false, home: Login()),
+        child: MaterialApp(debugShowCheckedModeBanner: false, home: Splash()),
       ),
     ),
   );
