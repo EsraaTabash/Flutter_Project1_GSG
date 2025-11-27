@@ -38,6 +38,7 @@ class LocalAuthService {
     await prefs.remove(userNameKey);
     await prefs.remove(userEmailKey);
     await prefs.remove(userPhoneKey);
+    await prefs.remove(favoritesKey);
   }
 
   static String? getUserName() {
@@ -69,9 +70,5 @@ class LocalAuthService {
   static bool isFavorite(int recipeId) {
     final current = getFavorites();
     return current.contains(recipeId.toString());
-  }
-
-  static Future<void> clearFavorites() async {
-    await prefs.remove(favoritesKey);
   }
 }
